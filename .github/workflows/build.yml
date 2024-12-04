@@ -50,7 +50,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           echo "Adding changes to git..."
-          git add _workerbbb.js
+          git add -f _workerbbb.js  # 强制添加被忽略的文件
           echo "Committing changes..."
           git commit -m "Automated build: update _worker.js" || echo "No changes to commit"
           echo "Pushing changes..."
