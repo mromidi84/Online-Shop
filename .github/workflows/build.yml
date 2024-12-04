@@ -37,12 +37,12 @@ jobs:
       - name: Copy built file
         run: |
           echo "Copying built file..."
-          cp dist/worker.js _worker.js
+          cp dist/workerbbb.js _workerbbb.js
 
       - name: Check copied file
         run: |
           echo "Verifying copied file..."
-          ls -la _worker.js
+          ls -la _workerbbb.js
 
       - name: Commit and push built worker to root
         run: |
@@ -50,7 +50,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           echo "Adding changes to git..."
-          git add _worker.js
+          git add _workerbbb.js
           echo "Committing changes..."
           git commit -m "Automated build: update _worker.js" || echo "No changes to commit"
           echo "Pushing changes..."
