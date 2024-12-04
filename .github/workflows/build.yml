@@ -3,7 +3,7 @@ name: Build and Deploy Worker
 on:
   push:
     branches:
-      - dev
+      - main
 
 permissions:
   contents: write
@@ -36,5 +36,4 @@ jobs:
           git commit -m "Automated build: update worker.js"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_
-          TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
