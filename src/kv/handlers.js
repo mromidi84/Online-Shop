@@ -48,6 +48,7 @@ export async function updateDataset (request, env) {
         return fieldValue;
     }
 
+    
     const remoteDNS = validateField('remoteDNS') ?? currentSettings?.remoteDNS ?? 'https://8.8.8.8/dns-query';
     const enableIPv6 = validateField('enableIPv6') ?? currentSettings?.enableIPv6 ?? true;
     const url = new URL(remoteDNS);
