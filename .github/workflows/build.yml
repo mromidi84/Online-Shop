@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Enable Debug Logs
+        run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+
       - name: Check out the code
         uses: actions/checkout@v4
 
@@ -22,19 +25,35 @@ jobs:
           node-version: "latest"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          echo "Installing dependencies..."
+          npm install
 
       - name: Build project
         run: |
-          # 构建并将文件输出到根目录
-          npx wrangler deploy src/worker.js --name bpb-worker-panel --compatibility-flag [nodejs_compat] --compatibility-date 2024-10-26 --dry-run --outdir=.
-      
+          echo "Building the project..."
+          npx wrangler deploy src/worker.js --name bpb-worker-panel --compatibility-flag [nodejs_compat] --compatibility-date 2024-10-26 --dry-run --outdir=dist
+
+      - name: Copy built file
+        run: |
+          echo "Copying built file..."
+          cp dist/worker.js _worker.js
+
+      - name: Check copied file
+        run: |
+          echo "Verifying copied file..."
+          ls -la _worker.js
+
       - name: Commit and push built worker to root
         run: |
+          echo "Configuring git..."
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add worker.js
-          git commit -m "Automated build: update worker.js"
+          echo "Adding changes to git..."
+          git add _worker.js
+          echo "Committing changes..."
+          git commit -m "Automated build: update _worker.js" || echo "No changes to commit"
+          echo "Pushing changes..."
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
